@@ -29,8 +29,7 @@ body {
 }
 
 .sidebar,
-.main-content,
-.navbar {
+.main-content {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
@@ -38,13 +37,17 @@ body {
 }
 
 .sidebar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: auto;
   width: var(--sidebar-width);
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: var(--shadow);
 }
-
 
 .profile {
   width: 100px;
@@ -83,12 +86,12 @@ body {
 }
 
 .main-content {
+  margin-left: calc(var(--sidebar-width) + 60px);
   flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-left: 20px;
 }
 
 .nav-bar,
@@ -115,6 +118,8 @@ body {
   right: 0;
   padding: 10px 20px;
   border-radius: 0 var(--border-radius) 0 var(--border-radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--content-color);
 }
 
 .navbar nav ul {
