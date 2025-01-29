@@ -5,9 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
   navLinks.forEach((link) => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
-      
-      contentTitle.textContent = this.textContent;
 
+      if (this.textContent.trim() === "About") {
+        contentTitle.textContent = "About Me";
+      } else {
+        contentTitle.textContent = this.textContent;
+      }
       navLinks.forEach((nav) => nav.classList.remove("active"));
 
       this.classList.add("active");
