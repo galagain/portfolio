@@ -17,3 +17,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sidebar = document.querySelector(".sidebar");
+  const container = document.querySelector(".container");
+
+  function adjustContainerPosition() {
+    const sidebarHeight = sidebar.offsetHeight;
+    const windowHeight = window.innerHeight;
+
+    const newMarginTop = (windowHeight - sidebarHeight) / 2;
+    container.style.marginTop = `${newMarginTop}px`;
+    container.style.marginBottom = `${newMarginTop}px`;
+
+    container.style.minHeight = `${sidebarHeight}px`;
+  }
+
+  adjustContainerPosition();
+  window.addEventListener("resize", adjustContainerPosition);
+});
