@@ -236,70 +236,83 @@ body {
   z-index: 10;
   gap: 10px;
 }
-
 .section-icon {
   width: 41px;
   height: 41px;
   background-color: var(--box-color);
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: relative;
+  border: 1px solid transparent;
+  background-image: linear-gradient(var(--content-color), var(--content-color)),
+    linear-gradient(to top, var(--border-color), var(--content-color));
+  background-origin: border-box;
+  background-clip: content-box, border-box;
   z-index: 11;
-  box-shadow: var(--shadow);
 }
+
+/* .section-icon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background-color: red;
+  transform: translateX(-50%);
+  z-index: 12;
+} */
 
 .section-icon i {
   color: var(--accent-color);
   font-size: 1.2rem;
 }
 
-.timeline {
+.timeline-list {
   position: relative;
-  margin: 0;
-  padding-left: 50px;
-}
-
-.timeline-line {
-  position: absolute;
-  top: -20px;
-  left: 20px;
-  width: 1px;
-  height: 100%;
-  background-color: var(--border-color);
-  z-index: 1;
+  padding-left: 30px;
+  list-style: none;
 }
 
 .timeline-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 30px;
   position: relative;
+  padding-left: 20px;
+  counter-increment: none;
 }
 
-.timeline-dot {
+.timeline-item:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: -47px;
+  left: -9px;
+  width: 1px;
+  height: calc(100% + 80px);
+  background: var(--border-color);
+}
+
+.timeline-item::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: -13px;
   width: 9px;
   height: 9px;
-  background-color: var(--accent-color);
   border-radius: 50%;
-  position: absolute;
-  left: -34px;
-  top: 5px;
-  box-shadow: 0 0 5px var(--accent-color);
-  z-index: 2;
+  background: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--box-color);
 }
 
-.timeline-content {
-  background-color: var(--box-color);
-  padding: 15px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  flex: 1;
+.timeline-item::marker {
+  content: none;
 }
 
-.timeline-title {
+.timeline-item-title {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-color);
@@ -310,11 +323,10 @@ body {
   font-size: 0.9rem;
   color: var(--accent-color);
   font-weight: 500;
-  margin-bottom: 8px;
 }
 
-.timeline-content p {
+.timeline-text {
   font-size: 0.85rem;
   color: var(--text-color);
-  margin: 0;
+  margin-top: 5px;
 }
