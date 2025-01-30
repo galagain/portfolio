@@ -6,7 +6,6 @@
   --accent-color: #007acc;
   --border-color: #484848;
   --ff-poppins: "Poppins", sans-serif;
-  --sidebar-width: 20%;
   --shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   --border-radius: 15px;
 }
@@ -37,12 +36,11 @@ body {
 }
 
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   height: auto;
-  width: var(--sidebar-width);
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,7 +84,7 @@ body {
 }
 
 .main-content {
-  margin-left: calc(var(--sidebar-width) + 60px);
+  margin-left: 260px;
   flex: 1;
   padding: 20px;
   display: flex;
@@ -95,7 +93,6 @@ body {
 }
 
 .nav-bar,
-.about,
 .services,
 .testimonials {
   width: 100%;
@@ -213,8 +210,7 @@ body {
 .social-links {
   display: flex;
   gap: 20px;
-  position: absolute;
-  bottom: 15px;
+  position: relative;
   width: auto;
 }
 
@@ -226,4 +222,8 @@ body {
   font-size: 1.2rem;
   color: var(--text-color);
   transition: color 0.3s ease;
+}
+
+.hidden {
+  display: none;
 }
