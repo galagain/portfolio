@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>galagain</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
@@ -308,14 +310,44 @@
         </section>
 
         <section class="contact">
-          <h2>Contact</h2>
-          <p>
-            Feel free to reach out via email or connect with me on LinkedIn.
-            Let's discuss AI, tech, or potential collaborations.
-          </p>
+          <div class="map-container">
+            <div id="custom-map"></div>
+          </div>
+
+          <div class="contact-form">
+            <h3 class="form-title">Contact Form</h3>
+            <form id="contact-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="from_name"
+                  placeholder="Full name"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <textarea
+                name="message"
+                placeholder="Your message"
+                rows="5"
+                required
+              ></textarea>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
         </section>
       </main>
     </div>
     <script src="script.js"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAurltvOVfxtM3OlydzYnsMcaoEdO-Z1Ac&callback=initMap"
+    ></script>
   </body>
 </html>

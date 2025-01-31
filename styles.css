@@ -1,7 +1,7 @@
 :root {
   --background-color: #181818;
   --content-color: #1e1e1e;
-  --box-color: #333;
+  --box-color: #333333;
   --text-color: white;
   --accent-color: #007acc;
   --border-color: #484848;
@@ -329,4 +329,72 @@ body {
   font-size: 0.85rem;
   color: var(--text-color);
   margin-top: 5px;
+}
+
+.map-container {
+  width: 100%;
+  height: 350px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.gm-style-cc,
+.gmnoprint {
+  display: none !important;
+}
+
+#custom-map {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+}
+
+.contact-form {
+  margin-top: 20px;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-group input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--box-color);
+  color: var(--text-color);
+  resize: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: darken(var(--accent-color), 10%);
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
 }
