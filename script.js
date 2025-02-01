@@ -193,3 +193,130 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+class Pixel {
+  constructor(canvas, context, x, y, color, speed, delay) {
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.ctx = context;
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.speed = this.getRandomValue(0.005, 0.1) * speed;
+    this.size = 0;
+    this.sizeStep = Math.random() * 0.1;
+    this.minSize = 0.3;
+    this.maxSizeInteger = 1.5;
+    this.maxSize = this.getRandomValue(this.minSize, this.maxSizeInteger);
+    this.delay = delay;
+    this.counter = 0;
+    this.counterStep = Math.random() * 0.5 + (this.width + this.height) * 0.001;
+    this.isIdle = false;
+    this.isReverse = false;
+    this.isShimmer = false;
+  }
+
+  getRandomValue(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  draw() {
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.x, this.y, this.size, this.size);
+  }
+
+  appear() {
+    if (this.counter <= this.delay) {
+      this.counter += this.counterStep;
+      return;
+    }
+    if (this.size >= this.maxSize) {
+      this.isShimmer = true;
+    }
+    if (this.isShimmer) {
+      this.shimmer();
+    } else {
+      this.size += this.sizeStep;
+    }
+    this.draw();
+  }
+
+  shimmer() {
+    if (this.size >= this.maxSize) {
+      this.isReverse = true;
+    } else if (this.size <= this.minSize) {
+      this.isReverse = false;
+    }
+    if (this.isReverse) {
+      this.size -= this.speed;
+    } else {
+      this.size += this.speed;
+    }
+  }
+}
+
+class PixelContainer extends HTMLElement {
+  static register(tag = "pixel-container") {
+    if ("customElements" in window) {
+      customElements.define(tag, this);
+    }
+  }
+
+  connectedCallback() {
+    const canvas = document.createElement("canvas");
+    this.shadowroot = this.attachShadow({ mode: "open" });
+    this.shadowroot.append(canvas);
+    this.canvas = this.shadowroot.querySelector("canvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.init();
+    this.resizeObserver = new ResizeObserver(() => this.init());
+    this.resizeObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    this.resizeObserver.disconnect();
+  }
+
+  init() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.pixels = [];
+    this.createPixels();
+    this.animate();
+  }
+
+  createPixels() {
+    for (let x = 0; x < this.canvas.width; x += 20) {
+      for (let y = 0; y < this.canvas.height; y += 20) {
+        const baseColor = getComputedStyle(document.documentElement)
+          .getPropertyValue("--accent-color")
+          .trim();
+        const colorVariations = [
+          baseColor,
+          this.adjustBrightness(baseColor, 1.5),
+          this.adjustBrightness(baseColor, 0.6),
+        ];
+        const color =
+          colorVariations[Math.floor(Math.random() * colorVariations.length)];
+        this.pixels.push(
+          new Pixel(this.canvas, this.ctx, x, y, color, 0.2, 300)
+        );
+      }
+    }
+  }
+
+  adjustBrightness(hex, factor) {
+    let r = parseInt(hex.substring(1, 3), 16) * factor;
+    let g = parseInt(hex.substring(3, 5), 16) * factor;
+    let b = parseInt(hex.substring(5, 7), 16) * factor;
+    return `rgb(${Math.min(255, r)}, ${Math.min(255, g)}, ${Math.min(255, b)})`;
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.pixels.forEach((pixel) => pixel.appear());
+  }
+}
+
+PixelContainer.register();
