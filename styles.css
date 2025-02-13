@@ -456,11 +456,11 @@ textarea {
   font-size: 0.95rem;
 }
 
-.about-box:hover {
+/* .about-box:hover {
   transform: translateY(-5px);
   background: var(--accent-color);
   color: var(--background-color);
-}
+} */
 
 pixel-container {
   position: fixed;
