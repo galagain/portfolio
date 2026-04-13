@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navLinks = document.querySelectorAll(".navbar nav ul li a");
   const contentTitle = document.querySelector(".content-title h1");
   const sections = document.querySelectorAll("section");
+  const profileImage = document.querySelector(".profile-img");
 
   sections.forEach((section) => section.classList.add("hidden"));
   document.querySelector(".about").classList.remove("hidden");
@@ -21,6 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (activeSection) {
         activeSection.classList.remove("hidden");
         window.dispatchEvent(new Event("refreshReveal"));
+      }
+
+      if (profileImage) {
+        profileImage.classList.remove("nav-spin");
+        void profileImage.offsetWidth;
+        profileImage.classList.add("nav-spin");
       }
 
       navLinks.forEach((nav) => nav.classList.remove("active"));

@@ -623,4 +623,23 @@ pixel-container {
   border-radius: var(--border-radius);
   display: block;
   margin: 0 auto;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.profile-img.nav-spin {
+  animation: avatar-nav-spin 0.75s ease;
+}
+
+@keyframes avatar-nav-spin {
+  0% {
+    transform: perspective(900px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(900px) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(900px) rotateY(360deg);
+  }
 }
