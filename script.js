@@ -186,6 +186,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function adjustContainerPosition() {
     if (!sidebar || !container) return;
 
+    if (window.innerWidth <= 900) {
+      container.style.marginTop = "0";
+      container.style.marginBottom = "0";
+      container.style.minHeight = "0";
+      return;
+    }
+
     const sidebarHeight = sidebar.offsetHeight;
     const windowHeight = window.innerHeight;
 
