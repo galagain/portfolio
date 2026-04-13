@@ -129,6 +129,53 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  const teaBox = document.querySelector(".tea-box");
+  const teaTrigger = document.querySelector(".tea-icon-wrap");
+  if (!teaBox) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let steamTimeoutId = null;
+  let nextSteamTimeoutId = null;
+
+  function scheduleSteam() {
+    const nextDelay = 4500 + Math.random() * 5000;
+    nextSteamTimeoutId = setTimeout(triggerSteam, nextDelay);
+  }
+
+  function triggerSteam() {
+    if (nextSteamTimeoutId) {
+      clearTimeout(nextSteamTimeoutId);
+      nextSteamTimeoutId = null;
+    }
+    if (steamTimeoutId) {
+      clearTimeout(steamTimeoutId);
+    }
+
+    teaBox.classList.remove("steaming");
+    void teaBox.offsetWidth;
+    teaBox.classList.add("steaming");
+
+    steamTimeoutId = setTimeout(() => {
+      teaBox.classList.remove("steaming");
+      steamTimeoutId = null;
+      scheduleSteam();
+    }, 3600);
+  }
+
+  if (teaTrigger) {
+    teaTrigger.addEventListener("click", triggerSteam);
+    teaTrigger.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      triggerSteam();
+    });
+  }
+
+  setTimeout(triggerSteam, 1800);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.querySelector(".sidebar");
   const container = document.querySelector(".container");
   const timelineLine = document.querySelector(".timeline-line");
