@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const activeSection = document.querySelector(`.${sectionClass}`);
       if (activeSection) {
         activeSection.classList.remove("hidden");
+        window.dispatchEvent(new Event("refreshReveal"));
       }
 
       navLinks.forEach((nav) => nav.classList.remove("active"));
@@ -72,6 +73,52 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   typeEffect();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const revealTargets = document.querySelectorAll(
+    ".content-title, .intro, .about-box, .section-header, .timeline-item, .map-container, .contact-form"
+  );
+
+  if (revealTargets.length === 0) return;
+
+  revealTargets.forEach((element, index) => {
+    element.classList.add("reveal-on-scroll");
+    element.classList.add(`reveal-delay-${(index % 4) + 1}`);
+  });
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealTargets.forEach((element) => element.classList.add("is-visible"));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: "0px 0px -10% 0px",
+    }
+  );
+
+  function observeHiddenTargets() {
+    revealTargets.forEach((element) => {
+      if (
+        !element.classList.contains("is-visible") &&
+        !element.closest(".hidden")
+      ) {
+        revealObserver.observe(element);
+      }
+    });
+  }
+
+  observeHiddenTargets();
+  window.addEventListener("refreshReveal", observeHiddenTargets);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
