@@ -29,6 +29,52 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  const professionBox = document.querySelector(".profession-box");
+  if (!professionBox) return;
+
+  const text = professionBox.textContent.trim();
+  const typingSpeed = 90;
+  const erasingSpeed = 45;
+  const pauseAfterTyping = 1400;
+  const pauseAfterErasing = 500;
+
+  let index = 0;
+  let isDeleting = false;
+
+  professionBox.classList.add("typing");
+  professionBox.textContent = "";
+
+  function typeEffect() {
+    if (!isDeleting) {
+      professionBox.textContent = text.slice(0, index + 1);
+      index += 1;
+
+      if (index === text.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, pauseAfterTyping);
+        return;
+      }
+
+      setTimeout(typeEffect, typingSpeed);
+      return;
+    }
+
+    professionBox.textContent = text.slice(0, index - 1);
+    index -= 1;
+
+    if (index === 0) {
+      isDeleting = false;
+      setTimeout(typeEffect, pauseAfterErasing);
+      return;
+    }
+
+    setTimeout(typeEffect, erasingSpeed);
+  }
+
+  typeEffect();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.querySelector(".sidebar");
   const container = document.querySelector(".container");
   const timelineLine = document.querySelector(".timeline-line");
